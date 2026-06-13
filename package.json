@@ -1,0 +1,41 @@
+{
+  "name": "react-router-activity",
+  "version": "0.1.0",
+  "description": "React 19.2 Activity bridge for React Router 7+ — preserves route state across navigation",
+  "keywords": [
+    "react",
+    "react-router",
+    "activity",
+    "keep-alive",
+    "state-preservation"
+  ],
+  "author": "Your Name <you@email.com>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=19.2.0",
+    "react-dom": ">=19.2.0",
+    "react-router-dom": ">=7.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
+  }
+}
