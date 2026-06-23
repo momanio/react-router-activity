@@ -13,12 +13,6 @@ interface FrozenRouteProviderProps {
   routeKey: string;
 }
 
-function sanitizeChildren(children: ReactNode): ReactNode {
-  if (typeof children === "string" || typeof children === "number") {
-    return <span className="rra-text-guard">{children}</span>;
-  }
-  return children;
-}
 
 export function FrozenRouteProvider({
   isVisible,
@@ -31,13 +25,24 @@ export function FrozenRouteProvider({
     frozenRef.current = children;
   }
 
+  // When React 19.2+ unstable_Activity is active, it expects a React element as its child.
+  // Raw strings or numbers can cause issues with the reconciler in some scenarios,
+  // so we wrap them in a span if Activity is available. Otherwise, React handles
+  // primitive children gracefully with `display:none` fallback.
+  const currentChildren =
+    Activity &&
+    (typeof frozenRef.current === "string" ||
+      typeof frozenRef.current === "number")
+      ? <span className="rra-text-guard">{frozenRef.current}</span>
+      : frozenRef.current;
+
   const content = (
     <ActivityContext.Provider value={{ isActive: isVisible }}>
       <div
         data-rra-route={routeKey}
         style={{ display: isVisible ? "contents" : "none" }}
       >
-        {sanitizeChildren(frozenRef.current)}
+        {currentChildren}
       </div>
     </ActivityContext.Provider>
   );

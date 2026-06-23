@@ -1,5 +1,3 @@
-cat > README.md << 'EOF'
-
 # react-router-activity
 
 > Preserve route state across navigation in React Router 7+ using React 19.2's native `<Activity>` component.
